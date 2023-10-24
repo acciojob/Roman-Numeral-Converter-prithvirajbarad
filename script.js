@@ -10,35 +10,25 @@ function convertToRoman(num) {
     };
 
   //your code here
-	let result = "";
-
-  for (let key in obj) {
-    const [symbol, value] = obj[key];
-    const count = Math.floor(num / value);
-
-    if (count >= 1) {
-      result += symbol.repeat(count);
-      num -= value * count;
-    }
-
-    // Handle cases like 4, 40, 9, etc. (using subtraction notation)
-    if (key % 2 === 0 && num >= obj[key + 2][1] - value) {
-      result += obj[key + 2][0] + symbol;
-      num -= obj[key + 2][1] - value;
+	 let romanNumeral = "";
+  for (let i = 0; i < values.length; i++) {
+    while (num >= values[i]) {
+      romanNumeral += romanNumerals[i];
+      num -= values[i];
     }
   }
 
-  return result;
+  return romanNumeral;
 }
 
-// console.log(convertToRoman(36));
+// Get the necessary DOM elements
+const numberInput = document.getElementById("number-input");
+const convertButton = document.getElementById("convert-button");
+const resultDiv = document.getElementById("result");
 
-// You can test your code by running the above function and printing it to console by pressing the run button at the top. To run it with input 36, uncomment the following line
-
-// console.log(convertToRoman(36));
-
-
-
-
-// do not edit below this line
-module.exports = convertToRoman
+// Add click event listener to the convert button
+convertButton.addEventListener("click", () => {
+  const inputNumber = parseInt(numberInput.value, 10);
+  const romanNumeral = convertToRoman(inputNumber);
+  resultDiv.textContent = `Roman Numeral: ${romanNumeral}`;
+});
